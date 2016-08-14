@@ -1,25 +1,58 @@
 import Vector from './vector';
+import Grid from './grid';
+import World from './world';
 
-export default class BouncingCritter {
-	public direction: string;
+/*
+*		BouncingCritter
+*
+*		can walk 100 turns
+*/
 
-	static directions = {
-		"n" : new Vector(0,-1),
-		"ne" : new Vector(1,-1),
-		"e" : new Vector(1, 0),
-		"se" : new Vector(1, 1),
-		"s" : new Vector(0, 1),
-		"sw" : new Vector(-1, 1),
-		"w" : new Vector(-1, 0),
-		"nw" : new Vector(-1,-1)
-	};
-	constructor(public view: string) {  // !!
+export default class Critter {
 
+	public energy: number;
+	public baige = '@';
+	
+	constructor(public world: World, public place: Vector) { 
+
+		this.energy = 10;
+		this.world.grid.set(this.place, "@");
+		
 	}
-	private random(array: string[]): string {
+	public act(): void {
+
+		// check energy
+		;
+		if (!this.healthy()) return;
+
+		// look around for good place
+		const v = this.getDirection();
+		const newplace = this.place.plus(v);
+		// move 
+		this.move(newplace);
+	}
+	private move(newplace: Vector): void {
+		this.world.grid.set(this.place, " ");
+		this.world.grid.set(newplace, this.baige);
+		this.place = newplace;
+		return;
+	}
+	private healthy(): boolean {
+
+		if(this.energy <= 1)  	{
+			this.world.grid.set(this.place,"T"); // die
+			this.energy = 0;
+			return false;
+		}
+
+		this.energy --;
+		return true;
+	}
+	private getDirection(): Vector{
+		const directions = this.world.grid.freeWays(this.place);
+		return this.random(directions);
+	}
+	private random(array: Vector[]): Vector {
 		return array[Math.floor(Math.random()*array.length)];
-	}
-	public getDirection(): void {
-		this.direction = this.random(Object.keys(this.directions))
 	}
 }

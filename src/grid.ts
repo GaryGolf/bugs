@@ -29,18 +29,25 @@ export default class Grid{
 
 		this.space[vector.x + vector.y * this.width] = value;
 	}
-	/* returns 3x3 string[] map  around vector */
-	public neighborhood(vector: Vector): string[] {
+	/* returns Vector[] map  around vector */
+	public freeWays(vector: Vector): Vector[] {
 		
-		let map=["","",""];
+		let map: Vector[] = [];
+		const directions = [
 
-		if(!this.isInside(vector)) return [];
+			new Vector(-1, 0), // left
+			new Vector(0, -1), // top
+			new Vector(1, 0),  // right
+			new Vector(0, 1), //bottom
+
+		];
 	
-		for(let y = 0; y < 3; y++){
-			for(let x = vector.x-1; x <= vector.x+1; x++) {
-				map[y] += this.get(new Vector(x, vector.y+y-1));
-			}
-		}
+		directions.forEach( direction => { 
+
+			if(this.get(vector.plus(direction)) != "#") map.push(direction);
+
+		}); 
+			
 		return map;		
 	}
 }

@@ -1,12 +1,12 @@
 const plan:string[] =[
 	'###############',
-	'#    #    # o##',
+	'#    #    #  ##',
 	'#    #        #',
 	'#           ###',
-	'#  o##       ##',
+	'#   ##       ##',
 	'# ###     #   #',
 	'#   ###   #   #',
-	'#      #    #o#',
+	'#      #    # #',
 	'###         ###',
 	'###############'
 ];
@@ -14,6 +14,7 @@ const plan:string[] =[
 import Vector from './vector';
 import Grid from './grid';
 import World from './world';
+import Critter from './critter';
 
 
 function test()
@@ -29,11 +30,20 @@ function test()
 	grid.set(new Vector(1,1),"X");
 	console.log(grid.get(new Vector(1,1)));
 
-	let world = new World(plan, {"o":"creatute"});
+	let world = new World(plan);
+	console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n');
 	console.log(world.toString());
-	let map = world.grid.neighborhood(new Vector(4,5));
-	let w2 = new World(map,{});
-	console.log(w2.toString());
+
+
+	let cd1 = new Critter(world, new Vector(2,2));
+	setInterval(() => {
+		cd1.act();
+		console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n');
+		console.log(world.toString());
+	//	console.log("\n"+cd1.energy+"%");
+	},1000)
+
+	
 }
 
 test();
