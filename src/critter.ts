@@ -15,8 +15,6 @@ export default class BouncingCritter {
 	};
 	constructor(public view: string) {  // !!
 
-		
-
 	}
 	private random(array: string[]): string {
 		return array[Math.floor(Math.random()*array.length)];

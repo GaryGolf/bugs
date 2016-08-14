@@ -3,8 +3,8 @@ const plan:string[] =[
 	'#    #    # o##',
 	'#    #        #',
 	'#           ###',
-	'#  o#        ##',
-	'#  ##     #   #',
+	'#  o##       ##',
+	'# ###     #   #',
 	'#   ###   #   #',
 	'#      #    #o#',
 	'###         ###',
@@ -31,6 +31,9 @@ function test()
 
 	let world = new World(plan, {"o":"creatute"});
 	console.log(world.toString());
+	let map = world.grid.neighborhood(new Vector(4,5));
+	let w2 = new World(map,{});
+	console.log(w2.toString());
 }
 
 test();
